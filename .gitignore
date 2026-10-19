@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Env
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Build
+dist/
+build/
+.next/
+out/
+*.tsbuildinfo
+
+# Prisma / DB
+backend/prisma/*.db
+backend/prisma/*.db-journal
+backend/prisma/dev.db
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Flutter
+mobile/.dart_tool/
+mobile/.packages
+mobile/build/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/*.iml
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Agent local config
+agents/config.json
+agents/*.log

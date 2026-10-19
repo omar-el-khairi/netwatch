@@ -1,0 +1,6 @@
+{
+  "backendUrl": "http://127.0.0.1:4000",
+  "apiKey": "REPLACE_WITH_SERVER_API_KEY",
+  "intervalSeconds": 5,
+  "requiredServices": []
+}

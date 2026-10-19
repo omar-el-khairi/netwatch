@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         String   @default("admin")
+  createdAt    DateTime @default(now())
+}
+
+model Server {
+  id         String      @id @default(uuid())
+  name       String
+  hostname   String
+  ipAddress  String
+  osType     String
+  apiKey     String      @unique
+  status     String      @default("pending")
+  lastSeenAt DateTime?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  metrics    Metric[]
+  alerts     Alert[]
+  thresholds Threshold[]
+}
+
+model Metric {
+  id            String   @id @default(uuid())
+  serverId      String
+  server        Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  cpuPercent    Float
+  ramPercent    Float
+  diskPercent   Float
+  pingMs        Float?
+  uptimeSeconds Int
+  servicesJson  String   @default("[]")
+  collectedAt   DateTime @default(now())
+
+  @@index([serverId, collectedAt])
+}
+
+model Alert {
+  id           String   @id @default(uuid())
+  serverId     String
+  server       Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  type         String
+  severity     String
+  message      String
+  value        Float?
+  acknowledged Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  @@index([serverId, createdAt])
+}
+
+model Threshold {
+  id         String   @id @default(uuid())
+  serverId   String?
+  server     Server?  @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  metricType String
+  warning    Float
+  critical   Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([serverId, metricType])
+}
+
+model Device {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  platform  String   @default("android")
+  userId    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

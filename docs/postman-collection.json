@@ -1,0 +1,58 @@
+{
+  "info": {
+    "name": "NetWatch Supervision API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:4000/api/health"
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@supervision.local\",\n  \"password\": \"Admin123!\"\n}"
+        },
+        "url": "http://127.0.0.1:4000/api/auth/login"
+      }
+    },
+    {
+      "name": "List Servers",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "http://127.0.0.1:4000/api/servers"
+      }
+    },
+    {
+      "name": "Post Metrics (Agent)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-API-Key", "value": "{{apiKey}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"cpuPercent\": 42,\n  \"ramPercent\": 55,\n  \"diskPercent\": 60,\n  \"uptimeSeconds\": 3600,\n  \"services\": []\n}"
+        },
+        "url": "http://127.0.0.1:4000/api/metrics"
+      }
+    },
+    {
+      "name": "List Alerts",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "http://127.0.0.1:4000/api/alerts"
+      }
+    }
+  ]
+}

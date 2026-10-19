@@ -1,0 +1,14 @@
+[Unit]
+Description=Agent Supervision Reseau
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/supervision/agents
+ExecStart=/opt/supervision/agents/.venv/bin/python /opt/supervision/agents/agent.py
+Restart=always
+RestartSec=5
+User=root
+
+[Install]
+WantedBy=multi-user.target
